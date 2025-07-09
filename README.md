@@ -6,7 +6,7 @@ Simulates games of pretty pretty princess to determine the average length of a g
 
 ```sh
 npm install
-npm run `start
+npm run start
 ```
 
 ## Findings
@@ -19,5 +19,10 @@ Simulating 1,000,000 games...
 |3|45|42|13|213|14.65|
 |4|56|53|17|286|13.62|
 
-1. Fewer players results in fewer turns
-1. All things being random... the maximum length of a game can easily explode
+## Charts
+
+### 2 Player Game
+
+![Image](./img/2-players.png)
+
+Pretty much as expected, the game is normally very short, but there is a long tail in which it is possible to have *very* long games

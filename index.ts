@@ -1,3 +1,4 @@
+import fs from 'fs'
 class Player {
     id: number
     position: number
@@ -259,7 +260,7 @@ function shuffleArray<T>(array: Array<T>): Array<T> {
 }
 
 async function main() {
-    const NUM_GAMES = 1000000;
+    const NUM_GAMES = 100 * 100 * 100;
     const stats: Array<any> = [];
     [2, 3, 4].forEach(numPlayers => {
         const totalTurns: Array<number> = []
@@ -270,7 +271,7 @@ async function main() {
             sumTurns: 0,
             sumRounds: 0
         }
-        for (let i = 0; i <= NUM_GAMES; i++) {
+        for (let i = 0; i < NUM_GAMES; i++) {
             let game: (Game | undefined) = new Game()
 
             for (let i = 1; i <= numPlayers; i++) {
@@ -301,6 +302,17 @@ async function main() {
             averageRounds: runningTotals.sumRounds / runningTotals.count
         })
 
+        const agg = totalTurns.reduce((acc: Record<number, number>, val) => {
+            if (!acc[val]) {
+                acc[val] = 1
+            } else {
+                acc[val] += 1
+            }
+
+            return acc
+        }, {})
+        const data = Object.entries(agg).map(([k, v]) => `${k},${v}`)
+        fs.writeFileSync(`output-${numPlayers}.csv`, 'turns,count\n' + data.join('\n'))
     })
     console.log(stats)
 }
